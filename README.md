@@ -89,3 +89,10 @@ DB_NAME=postgres
 DB_USER=postgres.xxxxx
 DB_PASSWORD=your-db-password
 DB_SSLMODE=require
+```
+
+---
+
+## 📬 Postman Documentation
+
+https://web.postman.co/documentation/17852367-82112a18-bbb1-43c3-917c-70e12745f85a/publish?workspaceId=3d6c77c2-a920-4a68-8ae0-d53e5d27efea&authFlowId=a22ae019-4dca-49d6-a7cc-2cc864c2911c
