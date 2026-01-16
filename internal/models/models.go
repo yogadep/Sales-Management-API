@@ -32,6 +32,7 @@ type Sale struct {
 	CashierID uint  `gorm:"not null"`
 	Total     int64 `gorm:"not null"`
 	CreatedAt time.Time
+	Items     []SaleItem `gorm:"foreignKey:SaleID"`
 }
 
 type SaleItem struct {

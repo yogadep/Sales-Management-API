@@ -23,7 +23,14 @@ func (r *ProductRepo) Update(p *models.Product) error {
 }
 
 func (r *ProductRepo) Delete(id uint) error {
-	return r.db.Delete(&models.Product{}, id).Error
+	res := r.db.Delete(&models.Product{}, id)
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+	return nil
 }
 
 func (r *ProductRepo) FindAll() ([]models.Product, error) {

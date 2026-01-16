@@ -1,8 +1,11 @@
 package product
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
+
+	"gorm.io/gorm"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -73,10 +76,16 @@ func (h *Handler) Update(c echo.Context) error {
 }
 
 func (h *Handler) Delete(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil || id <= 0 {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
+	}
 
 	if err := h.svc.Delete(uint(id)); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusNotFound, map[string]string{"error": "product not found"})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{"message": "deleted"})
