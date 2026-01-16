@@ -23,7 +23,6 @@ type Config struct {
 }
 
 func Load() Config {
-	// load .env kalau ada (tidak error jika file tidak ada)
 	_ = godotenv.Load()
 
 	return Config{
