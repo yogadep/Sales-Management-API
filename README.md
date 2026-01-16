@@ -28,9 +28,9 @@ This project was developed as part of a Golang Developer technical assessment.
 | Feature | Admin | Cashier |
 |--------|-------|---------|
 | Login | ✅ | ✅ |
-| Register User | ✅ |  
-| List Users | ✅ |  |
-| Product Management | ✅ |  
+| Register User | ✅ | |
+| List Users | ✅ | |
+| Product Management | ✅ | |
 | Create Sales Transaction | ✅ | ✅ |
 | View Sales | ✅ | ✅ |
 | Sales Report (JSON / PDF / Excel) | ✅ | ✅ |
@@ -55,21 +55,20 @@ This project was developed as part of a Golang Developer technical assessment.
 
 This application applies multiple security measures:
 
-- **SQL Injection**
-  - Prevented using GORM parameterized queries (no raw SQL concatenation).
-- **Authentication & Authorization**
-  - JWT-based authentication using the `Authorization: Bearer` header.
-  - Role-based access control (Admin and Cashier).
-- **XSS & Clickjacking Protection**
-  - Secure HTTP headers are applied globally.
-- **CSRF**
-  - Not applicable, as authentication does not rely on cookies but uses JWT headers.
-- **Rate Limiting**
-  - Global rate limiting is enabled to reduce brute-force and abusive requests.
-- **Password Security**
-  - Passwords are hashed using bcrypt and never returned by the API.
-- **CORS**
-  - Explicitly configured allowed origins for frontend access.
+- **SQL Injection**  
+  Prevented using GORM parameterized queries (no raw SQL concatenation).
+- **Authentication & Authorization**  
+  JWT-based authentication using the `Authorization: Bearer` header with role-based access control.
+- **XSS & Clickjacking Protection**  
+  Secure HTTP headers are applied globally.
+- **CSRF**  
+  Not applicable, as authentication does not rely on cookies but uses JWT headers.
+- **Rate Limiting**  
+  Global rate limiting is enabled to reduce brute-force and abusive requests.
+- **Password Security**  
+  Passwords are hashed using bcrypt and never returned by the API.
+- **CORS**  
+  Explicitly configured allowed origins for frontend access.
 
 ---
 
@@ -77,22 +76,61 @@ This application applies multiple security measures:
 
 Create a `.env` file in the project root:
 
-```env
-APP_PORT=8080
-APP_ENV=development
+APP_PORT=8080  
+APP_ENV=development  
 
-JWT_SECRET=your-jwt-secret
+JWT_SECRET=your-jwt-secret  
 
-DB_HOST=your-supabase-host
-DB_PORT=5432
-DB_NAME=postgres
-DB_USER=postgres.xxxxx
-DB_PASSWORD=your-db-password
-DB_SSLMODE=require
-```
+DB_HOST=your-supabase-host  
+DB_PORT=5432  
+DB_NAME=postgres  
+DB_USER=postgres.xxxxx  
+DB_PASSWORD=your-db-password  
+DB_SSLMODE=require  
 
 ---
 
-## 📬 Postman Documentation
+## ▶️ How to Run
 
-https://web.postman.co/documentation/17852367-82112a18-bbb1-43c3-917c-70e12745f85a/publish?workspaceId=3d6c77c2-a920-4a68-8ae0-d53e5d27efea&authFlowId=a22ae019-4dca-49d6-a7cc-2cc864c2911c
+1. Make sure **Go** is installed (Go 1.21+ recommended)
+2. Create a `.env` file (see Environment Variables section)
+3. Install dependencies:
+4. Run the application:
+
+go run ./cmd/api
+
+The server will start at:  
+http://localhost:8080
+
+---
+
+## 📮 API Documentation (Postman)
+
+The API documentation is publicly available via Postman:
+
+https://web.postman.co/documentation/17852367-82112a18-bbb1-43c3-917c-70e12745f85a/publish
+
+The documentation provides:
+- List of all available endpoints
+- Request & response examples
+- Authorization details (JWT Bearer Token)
+
+All requests use environment variables:
+- `BASE_URL`
+- `TOKEN`
+
+---
+
+## 📝 Notes
+
+- All sales transactions are handled atomically using database transactions.
+- Product stock is locked during sales creation to prevent race conditions.
+- Password hashes are never exposed via API responses.
+- This project focuses on backend API design and security best practices for assessment purposes.
+
+---
+
+## 📄 License
+
+This project was created for technical assessment purposes.
+
